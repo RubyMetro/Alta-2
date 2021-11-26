@@ -1,10 +1,15 @@
-﻿using Discord;
+﻿/*
+    01000001 01101100 01110100 01100001 
+    Made By Luca
+
+*/
+
+
+using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Alta
@@ -22,6 +27,8 @@ namespace Alta
 
             _client = new DiscordSocketClient();
             _client.Log += Log;
+            var commandHandler = new CommandHandler(_client, new CommandService());
+            await commandHandler.InstallCommandsAsync();
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
 
@@ -62,5 +69,7 @@ namespace Alta
             string token = File.ReadAllText("token.txt");
             return token;
         }
+
+
     }
 }
