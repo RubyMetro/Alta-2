@@ -18,13 +18,8 @@ namespace Alta
 
         public async Task MainAsync()
         {
-            var token = File.ReadAllText("token.txt");
-            if (token.Length < 1)
-            {
-                Console.WriteLine("Enter Token");
-                File.WriteAllText("token.txt", Console.ReadLine());
-                token = File.ReadAllText("token.txt");
-            }
+            string token = CheckForToken();
+
             _client = new DiscordSocketClient();
             _client.Log += Log;
             await _client.LoginAsync(TokenType.Bot, token);
@@ -36,6 +31,36 @@ namespace Alta
         {
             Console.WriteLine(msg.ToString());
             return Task.CompletedTask;
+        }
+
+        private string CheckForToken()
+        {
+            string token;
+            //checks if the token file exists
+            if (!File.Exists("token.txt"))
+            {
+                token = CreateToken();
+                return token;
+            }
+
+            token = File.ReadAllText("token.txt");
+
+            //if there isnt already a token, prompt the user to enter a token.
+            if (token.Length < 1)
+            {
+                token = CreateToken();
+                return token;
+            }
+
+            return token;
+        }
+
+        private string CreateToken()
+        {
+            Console.WriteLine("Enter Token");
+            File.WriteAllText("token.txt", Console.ReadLine());
+            string token = File.ReadAllText("token.txt");
+            return token;
         }
     }
 }
