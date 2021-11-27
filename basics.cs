@@ -1,6 +1,11 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Alta
@@ -32,16 +37,32 @@ namespace Alta
 
 		public async Task Test()
         {
+			var startTime = DateTime.Now;
 			var testAuthor = new EmbedAuthorBuilder()
-				.WithName("Alta");
+				.WithName("Alta")
+				.WithIconUrl("https://github.com/c-hristian-t/Alta-2/blob/main/images/Profile.png?raw=true");
 			var test = new EmbedBuilder
 			{
-				Title = "test",
-				Description = "test",
+				Title = "One Moment...",
+				Description = "Retrieving data...",
 				Author = testAuthor,
 				Color = Color.Blue
 			};
-			await ReplyAsync("", false, test.Build());
+			var message = await ReplyAsync("", false, test.Build());
+
+			var endTime = DateTime.Now;
+
+			var ping = endTime - startTime;
+
+			test = new EmbedBuilder {
+				Title = "System timing details",
+				Description =
+				$"Message Latency: {ping.Milliseconds}ms",
+				Color = Color.Blue,
+				Author = testAuthor
+            };
+
+			await message.ModifyAsync(msg => msg.Embed = test.Build());
         }
 	}
 }
