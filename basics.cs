@@ -13,6 +13,8 @@ namespace Alta
     // Create a module with no prefix
     public class InfoModule : ModuleBase<SocketCommandContext>
 	{
+		EmbedFooterBuilder footer = new EmbedFooterBuilder()
+			.WithText("use !help for more commands.");
 		// ~say hello world -> hello world
 		[Command("say")]
 		[Summary("Echoes a message.")]
@@ -59,7 +61,9 @@ namespace Alta
 				Description =
 				$"Message Latency: {ping.Milliseconds}ms",
 				Color = Color.Blue,
-				Author = testAuthor
+				Author = testAuthor,
+				Footer = footer
+				
             };
 
 			await message.ModifyAsync(msg => msg.Embed = test.Build());
