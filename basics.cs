@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using System.Threading.Tasks;
 
@@ -25,6 +26,23 @@ namespace Alta
 			var userInfo = user ?? Context.Client.CurrentUser;
 			await ReplyAsync($"{userInfo.Username}#{userInfo.Discriminator}");
 		}
+
+		[Command("test")]
+		[Summary("n/a")]
+
+		public async Task Test()
+        {
+			var testAuthor = new EmbedAuthorBuilder()
+				.WithName("Alta");
+			var test = new EmbedBuilder
+			{
+				Title = "test",
+				Description = "test",
+				Author = testAuthor,
+				Color = Color.Blue
+			};
+			await ReplyAsync("", false, test.Build());
+        }
 	}
 }
 
