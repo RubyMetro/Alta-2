@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alta", "Alta.csproj", "{C0FF1553-ADFE-4AC7-B323-93B7CBDBAF68}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{74973FA7-378E-471F-BA8E-C6E157559AF8}"
+	ProjectSection(SolutionItems) = preProject
+		token.txt = token.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0FF1553-ADFE-4AC7-B323-93B7CBDBAF68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0FF1553-ADFE-4AC7-B323-93B7CBDBAF68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0FF1553-ADFE-4AC7-B323-93B7CBDBAF68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0FF1553-ADFE-4AC7-B323-93B7CBDBAF68}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1685BE9F-5C18-4687-A007-3408E6CF4638}
+	EndGlobalSection
+EndGlobal
