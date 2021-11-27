@@ -34,39 +34,39 @@ namespace Alta
 			await ReplyAsync($"{userInfo.Username}#{userInfo.Discriminator}");
 		}
 
-		[Command("test")]
+		[Command("ping")]
 		[Summary("n/a")]
 
-		public async Task Test()
+		public async Task Ping()
         {
 			var startTime = DateTime.Now;
-			var testAuthor = new EmbedAuthorBuilder()
+			var pingAuthor = new EmbedAuthorBuilder()
 				.WithName("Alta")
 				.WithIconUrl("https://github.com/c-hristian-t/Alta-2/blob/main/images/Profile.png?raw=true");
-			var test = new EmbedBuilder
+			var pingEmbed = new EmbedBuilder
 			{
 				Title = "One Moment...",
 				Description = "Retrieving data...",
-				Author = testAuthor,
+				Author = pingAuthor,
 				Color = Color.Blue
 			};
-			var message = await ReplyAsync("", false, test.Build());
+			var message = await ReplyAsync("", false, pingEmbed.Build());
 
 			var endTime = DateTime.Now;
 
 			var ping = endTime - startTime;
 
-			test = new EmbedBuilder {
+			pingEmbed = new EmbedBuilder {
 				Title = "System timing details",
 				Description =
 				$"Message Latency: {ping.Milliseconds}ms",
 				Color = Color.Blue,
-				Author = testAuthor,
+				Author = pingAuthor,
 				Footer = footer
 				
             };
 
-			await message.ModifyAsync(msg => msg.Embed = test.Build());
+			await message.ModifyAsync(msg => msg.Embed = pingEmbed.Build());
         }
 	}
 }
