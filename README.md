@@ -35,6 +35,7 @@ Some of you have too much free time on your hands and that's great! If you wish 
 
 ## Support
 The following resources are available if you ever find yourself needing help!
+
 <a href="https://discord.gg/jQqpyjASaJ">Metro Discord</a>
 
 <a href="https://madebymetro.com">Metro Website (under construction)</a>
