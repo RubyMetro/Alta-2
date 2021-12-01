@@ -8,7 +8,9 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Alta
@@ -22,6 +24,30 @@ namespace Alta
 
         public async Task MainAsync()
         {
+            bool cdnFailed = await testCDN();
+            if (cdnFailed)
+            {
+                do
+                {
+                    try
+                    {
+                        Console.WriteLine("CDN response failed");
+                        Console.WriteLine("Enter CDN address:");
+                        File.WriteAllText("cdn.txt", Console.ReadLine());
+                        string cdn = File.ReadAllText("cdn.txt");
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(cdn + "a_banner.png");
+                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        cdnFailed = true;
+                    }
+                    cdnFailed = false;
+                }
+                while (cdnFailed);
+            }
+
             bool failed = await Login();
             if (failed)
             {
@@ -53,7 +79,9 @@ namespace Alta
 
                 }
                 while (failed);
+
             }
+            
         }
         private Task Log(LogMessage msg)
         {
@@ -93,7 +121,7 @@ namespace Alta
                 return cdn;
             }
 
-            cdn = File.ReadAllText("token.txt");
+            cdn = File.ReadAllText("cdn.txt");
 
             //if there isnt already a token, prompt the user to enter a token.
             if (cdn.Length < 1)
@@ -127,7 +155,6 @@ namespace Alta
             try
             {
                 string token = CheckForToken();
-                string cdn = CheckForCDN();
 
                 _client = new DiscordSocketClient();
                 _client.Log += Log;
@@ -145,7 +172,25 @@ namespace Alta
                 return failed;
             }
             failed = false;
-            return failed = false;
+            return failed;
+        }
+        private async Task<bool> testCDN()
+        {
+            bool failed;
+            string cdn = CheckForCDN();
+            try
+                {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(cdn + "a_banner.png");
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                failed = true;
+                return failed;
+            }
+            failed = false;
+            return failed;
         }
     }
 }
