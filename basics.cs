@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Alta
@@ -86,13 +87,20 @@ namespace Alta
 
 			TimeSpan cdnLatency = timer.Elapsed;
 
+			int uptime = Environment.TickCount;
+			uptime = uptime / 1000 / 60 / 60 / 24;
+
+			TimeSpan clientUptime = DateTime.Now - Process.GetCurrentProcess().StartTime;
+
 			pingEmbed = new EmbedBuilder {
 				Title = "System details",
 				Description =
-				$"Message Latency: {ping.Milliseconds}ms\n" +
-				$"Gateway: {Context.Client.Latency}ms\n" +
-				$"Current CDN:\t{cdn}\n" +
-				$"CDN response time:\t{(int)cdnLatency.TotalMilliseconds}ms",
+				$"Message Latency:		{ping.Milliseconds}ms\n" +
+				$"Gateway:				{Context.Client.Latency}ms\n" +
+				$"Current CDN:			{cdn}\n" +
+				$"CDN response time:	{(int)cdnLatency.TotalMilliseconds}ms\n" +
+				$"System uptime:		{uptime} days\n" +
+				$"Client uptime:		{(int)clientUptime.TotalDays} days",
 				Color = Color.Blue,
 				ThumbnailUrl = $"{cdn}a_server.png",
 				Author = pingAuthor,
