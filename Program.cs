@@ -33,9 +33,6 @@ namespace Alta
                         Console.WriteLine("Enter Token");
                         File.WriteAllText("token.txt", Console.ReadLine());
                         string token = File.ReadAllText("token.txt");
-                        Console.WriteLine("Enter CDN address");
-                        File.WriteAllText("cdn.txt", Console.ReadLine());
-                        string cdn = File.ReadAllText("cdn.txt");
 
                         _client = new DiscordSocketClient();
                         _client.Log += Log;
