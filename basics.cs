@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -52,7 +53,7 @@ namespace Alta
 			var message = await ReplyAsync("", false, userInfoEmbed.Build());
 		}
 
-		[Command("ping")]
+		[Command("status")]
 		[Summary("n/a")]
 
 		public async Task Ping()
@@ -74,11 +75,24 @@ namespace Alta
 
 			var ping = endTime - startTime;
 
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(cdn + "a_banner.png");
+
+			Stopwatch timer = new Stopwatch();
+			timer.Start();
+
+			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+			timer.Stop();
+
+			TimeSpan cdnLatency = timer.Elapsed;
+
 			pingEmbed = new EmbedBuilder {
-				Title = "System timing details",
+				Title = "System details",
 				Description =
 				$"Message Latency: {ping.Milliseconds}ms\n" +
-				$"Gateway: {Context.Client.Latency}ms",
+				$"Gateway: {Context.Client.Latency}ms\n" +
+				$"Current CDN:\t{cdn}\n" +
+				$"CDN response time:\t{(int)cdnLatency.TotalMilliseconds}ms",
 				Color = Color.Blue,
 				ThumbnailUrl = $"{cdn}a_server.png",
 				Author = pingAuthor,
