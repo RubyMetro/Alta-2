@@ -93,7 +93,7 @@ namespace Alta
                 return cdn;
             }
 
-            cdn = File.ReadAllText("token.txt");
+            cdn = File.ReadAllText("cdn.txt");
 
             //if there isnt already a token, prompt the user to enter a token.
             if (cdn.Length < 1)
