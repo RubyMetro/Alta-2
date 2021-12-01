@@ -22,16 +22,41 @@ namespace Alta
 
         public async Task MainAsync()
         {
-            string token = CheckForToken();
+            bool failed = await Login();
+            if (failed)
+            {
+                do
+                {
+                    try
+                    {
+                        Console.WriteLine("Login Failed");
+                        Console.WriteLine("Enter Token");
+                        File.WriteAllText("token.txt", Console.ReadLine());
+                        string token = File.ReadAllText("token.txt");
+                        Console.WriteLine("Enter CDN address");
+                        File.WriteAllText("cdn.txt", Console.ReadLine());
+                        string cdn = File.ReadAllText("cdn.txt");
 
-            _client = new DiscordSocketClient();
-            _client.Log += Log;
-            var commandHandler = new CommandHandler(_client, new CommandService());
-            await commandHandler.InstallCommandsAsync();
-            await _client.LoginAsync(TokenType.Bot, token);
-            await _client.StartAsync();
+                        _client = new DiscordSocketClient();
+                        _client.Log += Log;
+                        var commandHandler = new CommandHandler(_client, new CommandService());
+                        await commandHandler.InstallCommandsAsync();
+                        await _client.LoginAsync(TokenType.Bot, token);
+                        await _client.StartAsync();
 
-            await Task.Delay(-1);
+                        await Task.Delay(-1);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        failed = true;
+                    }
+                    failed = false;
+
+
+                }
+                while (failed);
+            }
         }
         private Task Log(LogMessage msg)
         {
@@ -61,6 +86,28 @@ namespace Alta
             return token;
         }
 
+        private string CheckForCDN()
+        {
+            string cdn;
+            //checks if the token file exists
+            if (!File.Exists("cdn.txt"))
+            {
+                cdn = CreateCDN();
+                return cdn;
+            }
+
+            cdn = File.ReadAllText("token.txt");
+
+            //if there isnt already a token, prompt the user to enter a token.
+            if (cdn.Length < 1)
+            {
+                cdn = CreateCDN();
+                return cdn;
+            }
+
+            return cdn;
+        }
+
         private string CreateToken()
         {
             Console.WriteLine("Enter Token");
@@ -69,6 +116,39 @@ namespace Alta
             return token;
         }
 
+        private string CreateCDN()
+        {
+            Console.WriteLine("Enter CDN address");
+            File.WriteAllText("cdn.txt", Console.ReadLine());
+            string cdn = File.ReadAllText("cdn.txt");
+            return cdn;
+        }
 
+        private async Task<bool> Login()
+        {
+            bool failed;
+            try
+            {
+                string token = CheckForToken();
+                string cdn = CheckForCDN();
+
+                _client = new DiscordSocketClient();
+                _client.Log += Log;
+                var commandHandler = new CommandHandler(_client, new CommandService());
+                await commandHandler.InstallCommandsAsync();
+                await _client.LoginAsync(TokenType.Bot, token);
+                await _client.StartAsync();
+
+                await Task.Delay(-1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                failed = true;
+                return failed;
+            }
+            failed = false;
+            return failed = false;
+        }
     }
 }
