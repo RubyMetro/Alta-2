@@ -1,11 +1,11 @@
 # Alta-2
-<img src="https://github.com/c-hristian-t/Alta-2/blob/main/images/Banner.png?raw=true" alt="banner">
+<img src="https://cdn.madebymetro.com/alta/a_banner.png" alt="banner">
 <b>A general purpose discord.NET bot to make administration easier and servers more engaging! From virtual currency and shops to advanced moderation tools, Alta is built from the core to deliver.</b>
 While this project is still in it's Alpha phase and not release ready, you are completely free to try alta for yourself! you can report any bugs found <a href="https://.github.com/c-hristian-t/Alta-2/issues>">here!</a> please make sure to read the setup information below as it offers helpful information for setting up Alta correctly. 
 
 ## Setup
 
-<img align="right" width=175 src="https://github.com/c-hristian-t/Alta-2/blob/main/images/Settings.png?raw=true" />
+<img align="right" width=175 src="https://cdn.madebymetro.com/alta/a_settings.png" />
 
 things to keep in mind:
   - a cdn or any similar file hosting server is required as any images are loaded from the web as apposed to locally
